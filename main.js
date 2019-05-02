@@ -1,4 +1,4 @@
-var eventBus = new Vue();
+let eventBus = new Vue(); // без опций внутри
 
 // Компонент "Продукт"
 Vue.component('product', {
@@ -122,12 +122,12 @@ Vue.component('product', {
       } else {
         return 2.99;
       }
-    },
-    mounted() {
-      eventBus.$on('review-submitted', productReview => {
-        this.reviews.push(productReview);
-      });
     }
+  },
+  mounted() {
+    eventBus.$on('review-submitted', productReview => {
+      this.reviews.push(productReview);
+    });
   }
 });
 
@@ -231,18 +231,19 @@ Vue.component('product-tabs', {
   },
   template: `
     <div>
-      <span
-        class="tab"
-        :class="{ activeTab: selectedTab === tab }"
-        v-for="(tab, index) in tabs"
-        :key="index"
-        @click="selectedTab = tab"
-      >
-        {{ tab }}
-      </span>
+      <div>
+        <span
+          class="tab"
+          :class="{ activeTab: selectedTab === tab }"
+          v-for="(tab, index) in tabs"
+          :key="index"
+          @click="selectedTab = tab"
+        >
+          {{ tab }}
+        </span>
+      </div>
 
       <div v-show="selectedTab === 'Reviews'">
-        <h2>Reviews:</h2>
         <p v-if="!reviews.length">There are no reviews yet.</p>
         <ul>
           <li v-for="review in reviews">
